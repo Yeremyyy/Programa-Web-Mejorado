@@ -10,13 +10,14 @@ const port = 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'Html')));
+app.use('/css' ,express.static(path.join(__dirname, 'css')));
 
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root', // Cambia esto por tu usuario de MySQL
     password: '', // Cambia esto por tu contraseña de MySQL
-    database: 'registro'
+    database: 'Registros'
 });
 
 db.connect(err => {
@@ -28,16 +29,16 @@ db.connect(err => {
 
 // Ruta para servir el archivo index.html
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'Html', 'Pagina.html'));
 });
 
 app.post('/check-availability', (req, res) => {
     const { type, value } = req.body;
     let query = '';
     if (type === 'username') {
-        query = 'SELECT * FROM usuarios WHERE nombre = ?';
+        query = 'SELECT * FROM Usuarios WHERE nombre = ?';
     } else if (type === 'email') {
-        query = 'SELECT * FROM usuarios WHERE correo = ?';
+        query = 'SELECT * FROM Usuarios WHERE correo = ?';
     }
     db.query(query, [value], (err, results) => {
         if (err) throw err;
