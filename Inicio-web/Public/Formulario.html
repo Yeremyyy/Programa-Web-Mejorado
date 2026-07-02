@@ -27,11 +27,23 @@
         <div>
             <label for="confirmPassword">Confirmar</label>
             <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <button type="button" id="togglePassword">👁️</button> <!--BOTON PARA OCULTAR CONTRASEÑA-->
             <span class="error-message" id="confirmPasswordError"></span>
         </div>
         <button type="submit" id="submitButton" disabled>Registrar</button>
         <div id="successMessage" class="success-message"></div>
     </form>
     <script src="script.js"></script>
+
+    <!-- modal de confirmacion -->
+    <div id="modalConfirmacion" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+    <div style="background:white; padding:30px; border-radius:10px; text-align:center; width:300px;">
+        <h3>¿Confirmas el registro?</h3>
+        <p><strong>Nombre:</strong> <span id="resumenNombre"></span></p>
+        <p><strong>Correo:</strong> <span id="resumenCorreo"></span></p>
+        <button type="button" id="btnConfirmar"> Confirmar</button>
+        <button type="button" id="btnCancelar"> Cancelar</button>
+    </div>
+</div>
 </body>
 </html>
