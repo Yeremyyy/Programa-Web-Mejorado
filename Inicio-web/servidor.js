@@ -27,9 +27,15 @@ db.connect(err => {
     console.log('Conectado a la base de datos MySQL');
 });
 
+
+app.get('/publico', (req, res) => {
+    res.sendFile(path.join(__dirname, 'Public', 'Pagina.html')); 
+
+});
+
 // Ruta para servir el archivo index.html
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'Public', 'Pagina.html'));
+    res.sendFile(path.join(__dirname, 'Public', 'Formulario.html'));
 });
 
 app.post('/check-availability', (req, res) => {
@@ -49,7 +55,7 @@ app.post('/check-availability', (req, res) => {
 app.post('/register', async (req, res) => {
     const { username, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10); // Hashear la contraseña
-    const query = 'INSERT INTO usuarios (username, email, password) VALUES (?, ?, ?)';
+    const query = 'INSERT INTO Usuarios (nombre, correo, Contraseña) VALUES (?, ?, ?)';
     db.query(query, [username, email, hashedPassword], (err, results) => {
         if (err) {
             if (err.code === 'ER_DUP_ENTRY') {
