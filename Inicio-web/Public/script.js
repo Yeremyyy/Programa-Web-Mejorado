@@ -1,11 +1,11 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('registrationForm');
     const username = document.getElementById('username');
     const email = document.getElementById('email');
     const password = document.getElementById('password');
     const confirmPassword = document.getElementById('confirmPassword');
     const submitButton = document.getElementById('submitButton');
-    
+
     const usernameError = document.getElementById('usernameError');
     const emailError = document.getElementById('emailError');
     const passwordError = document.getElementById('passwordError');
@@ -82,37 +82,37 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify({ type, value })
         })
-        .then(response => response.json())
-        .then(data => {
-            if (type === 'username') {
-                usernameError.textContent = data.available ? 'Nombre de usuario disponible.' : 'Nombre de usuario no disponible.';
-                if (data.available) {
-                    username.classList.add('valid');
-                    username.classList.remove('invalid');
-                } else {
-                    username.classList.add('invalid');
-                    username.classList.remove('valid');
+            .then(response => response.json())
+            .then(data => {
+                if (type === 'username') {
+                    usernameError.textContent = data.available ? 'Nombre de usuario disponible.' : 'Nombre de usuario no disponible.';
+                    if (data.available) {
+                        username.classList.add('valid');
+                        username.classList.remove('invalid');
+                    } else {
+                        username.classList.add('invalid');
+                        username.classList.remove('valid');
+                    }
+                } else if (type === 'email') {
+                    emailError.textContent = data.available ? 'Correo electrónico disponible.' : 'Correo electrónico no disponible.';
+                    if (data.available) {
+                        email.classList.add('valid');
+                        email.classList.remove('invalid');
+                    } else {
+                        email.classList.add('invalid');
+                        email.classList.remove('valid');
+                    }
                 }
-            } else if (type === 'email') {
-                emailError.textContent = data.available ? 'Correo electrónico disponible.' : 'Correo electrónico no disponible.';
-                if (data.available) {
-                    email.classList.add('valid');
-                    email.classList.remove('invalid');
-                } else {
-                    email.classList.add('invalid');
-                    email.classList.remove('valid');
-                }
-            }
-            checkFormValidity();
-        })
-        .catch(error => console.error('Error:', error));
+                checkFormValidity();
+            })
+            .catch(error => console.error('Error:', error));
     }
 
     function checkFormValidity() {
         const isFormValid = username.classList.contains('valid') &&
-                            email.classList.contains('valid') &&
-                            password.classList.contains('valid') &&
-                            confirmPassword.classList.contains('valid');
+            email.classList.contains('valid') &&
+            password.classList.contains('valid') &&
+            confirmPassword.classList.contains('valid');
         submitButton.disabled = !isFormValid;
     }
 
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
     password.addEventListener('input', validatePassword);
     confirmPassword.addEventListener('input', validateConfirmPassword);
 
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', function (event) {
         event.preventDefault();
         validateUsername();
         validateEmail();
@@ -139,17 +139,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     password: password.value
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    successMessage.textContent = '¡Registro exitoso!';
-                    successMessage.style.display = 'block';
-                } else {
-                    successMessage.textContent = data.message || 'Error en el registro.';
-                    successMessage.style.display = 'block';
-                }
-            })
-            .catch(error => console.error('Error:', error));
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        successMessage.textContent = '¡Registro exitoso!';
+                        successMessage.style.display = 'block';
+                        window.location.href = '/publico';
+                        
+
+                    } else {
+                        successMessage.textContent = data.message || 'Error en el registro.';
+                        successMessage.style.display = 'block';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         }
     });
 });
