@@ -10,7 +10,7 @@ const port = 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'Html')));
+app.use(express.static(path.join(__dirname, 'Public')));
 app.use('/css' ,express.static(path.join(__dirname, 'css')));
 
 const db = mysql.createConnection({
@@ -29,7 +29,7 @@ db.connect(err => {
 
 // Ruta para servir el archivo index.html
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'Html', 'Pagina.html'));
+    res.sendFile(path.join(__dirname, 'Public', 'Pagina.html'));
 });
 
 app.post('/check-availability', (req, res) => {
