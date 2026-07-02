@@ -121,35 +121,56 @@ document.addEventListener('DOMContentLoaded', function() {
     password.addEventListener('input', validatePassword);
     confirmPassword.addEventListener('input', validateConfirmPassword);
 
+    //modificacion para mostrar modal de confirmacion antes de enviar el formulario
     form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        validateUsername();
-        validateEmail();
-        validatePassword();
-        validateConfirmPassword();
-        if (submitButton.disabled === false) {
-            fetch('http://localhost:3000/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: username.value,
-                    email: email.value,
-                    password: password.value
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    successMessage.textContent = '¡Registro exitoso!';
-                    successMessage.style.display = 'block';
-                } else {
-                    successMessage.textContent = data.message || 'Error en el registro.';
-                    successMessage.style.display = 'block';
-                }
-            })
-            .catch(error => console.error('Error:', error));
+    event.preventDefault();
+    validateUsername();
+    validateEmail();
+    validatePassword();
+    validateConfirmPassword();
+
+    if (submitButton.disabled === false) {
+        // Mostrar modal con los datos
+        document.getElementById('resumenNombre').textContent = username.value;
+        document.getElementById('resumenCorreo').textContent = email.value;
+        document.getElementById('modalConfirmacion').style.display = 'flex';
+    }
+});
+
+document.getElementById('btnConfirmar').addEventListener('click', function() {
+    document.getElementById('modalConfirmacion').style.display = 'none';
+
+    fetch('http://localhost:3000/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            username: username.value,
+            email: email.value,
+            password: password.value
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            successMessage.textContent = '¡Registro exitoso!';
+            successMessage.style.display = 'block';
+        } else {
+            successMessage.textContent = data.message || 'Error en el registro.';
+            successMessage.style.display = 'block';
         }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+document.getElementById('btnCancelar').addEventListener('click', function() {
+    document.getElementById('modalConfirmacion').style.display = 'none';
+});
+    
+
+            // Mostrar/ocultar contraseña
+            document.getElementById('togglePassword').addEventListener('click', function() {                const input = document.getElementById('password');
+            const esTexto = input.type === 'text';
+            input.type = esTexto ? 'password' : 'text';
+            this.textContent = esTexto ? '👁️' : '🙈';
     });
 });
