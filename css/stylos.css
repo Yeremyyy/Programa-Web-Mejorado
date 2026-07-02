@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+form {
+    max-width: 400px;
+    margin: auto;
+    padding: 1em;
+    border: 1px solid #000000;
+    border-radius: 1em;
+    background-color: darkgrey;
+}
+
+div {
+    margin-bottom: 1em;
+}
+
+label {
+    margin-bottom: .5em;
+    color: #333333;
+    display: block;
+}
+
+input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: .5em;
+    width: 100%;
+}
+
+input:focus {
+    border-color: #4CAF50;
+}
+
+.error-message {
+    color: red;
+    font-size: .875em;
+    margin-top: .5em;
+}
+
+.success-message {
+    color: green;
+    font-size: 1em;
+    margin-top: 1em;
+    display: none;
+}
+
+.valid {
+    border-color: green;
+}
+
+.invalid {
+    border-color: red;
+}
